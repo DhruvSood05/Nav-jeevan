@@ -238,7 +238,7 @@ function SidebarContent({
     <div className="p-4 h-full flex flex-col">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h2 className="text-lg font-semibold">Live Relief Map</h2>
+          <h2 className="text-lg font-semibold">Nav Jeevan Map</h2>
           <p className="text-xs text-gray-500">Last update: {lastUpdate.toLocaleTimeString()}</p>
         </div>
         <Button variant="ghost" size="sm" onClick={() => setShowSidebar(false)}>

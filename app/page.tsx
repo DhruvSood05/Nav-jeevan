@@ -65,7 +65,7 @@ export default function Home() {
           >
             <motion.div className="space-y-4" variants={itemVariants}>
               <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-gray-900 via-red-600 to-orange-600 bg-clip-text text-transparent">
-                ReliefConnect
+                Nav Jeevan
               </h1>
               <p className="mx-auto max-w-2xl text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed px-4">
                 Revolutionary disaster relief platform that connects victims, volunteers, and organizations with{" "}
@@ -131,7 +131,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-4">How ReliefConnect Works</h2>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-4">How Nav Jeevan Works</h2>
             <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-4">
               Our platform streamlines disaster response with intelligent matching and real-time coordination
             </p>
@@ -256,7 +256,7 @@ export default function Home() {
         <div className="container px-4 mx-auto">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold">ReliefConnect</h3>
+              <h3 className="text-lg font-semibold">Nav Jeevan</h3>
               <p className="text-gray-400 text-sm">
                 Disaster relief coordination platform connecting communities worldwide.
               </p>
@@ -276,7 +276,7 @@ export default function Home() {
                 </li>
                 <li>
                   <Link href="/map" className="hover:text-white transition-colors">
-                    Relief Map
+                    Nav Jeevan Map
                   </Link>
                 </li>
                 <li>
@@ -323,7 +323,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-            <p>© 2025 ReliefConnect. All rights reserved. Built for humanity.</p>
+            <p>© 2025 Nav Jeevan. All rights reserved. Built for humanity.</p>
           </div>
         </div>
       </footer>

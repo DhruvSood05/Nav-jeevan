@@ -231,7 +231,7 @@ export default function VolunteerPage() {
                     className="w-full h-10 sm:h-12 bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100 text-sm"
                   >
                     <MapPin className="mr-2 h-4 w-4" />
-                    View Live Relief Map
+                    View Nav Jeevan Map
                   </Button>
                 </Link>
               </CardContent>
@@ -438,7 +438,7 @@ export default function VolunteerPage() {
                       <p className="text-center text-muted-foreground mb-4 text-sm sm:text-base">No active missions</p>
                       <Button
                         variant="link"
-                        onClick={() => document.querySelector('[value="requests"]')?.click()}
+                        onClick={() => (document.querySelector('[value="requests"]') as HTMLElement | null)?.click()}
                         className="text-sm"
                       >
                         Browse available requests

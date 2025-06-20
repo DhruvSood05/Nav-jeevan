@@ -349,7 +349,7 @@ const TrafficMap: React.FC<{ onMarkerClick?: (location: EmergencyLocation) => vo
       <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-white rounded-full px-3 py-2 shadow-lg border z-[1000] text-xs sm:text-sm">
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-          <span className="font-medium">Live Emergency Data</span>
+          <span className="font-medium">Nav Jeevan Live Emergency Data</span>
           <span className="text-gray-500 hidden sm:inline">
             {emergencyLocations.filter((l) => l.status === "active").length} Active •{" "}
             {emergencyLocations.filter((l) => l.status === "responding").length} Responding

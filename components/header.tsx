@@ -32,7 +32,7 @@ export function Header() {
                 <AlertTriangle className="h-5 w-5 text-white" />
               </div>
               <span className="font-bold text-xl bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent">
-                ReliefConnect
+                Nav Jeevan
               </span>
             </Link>
           </div>

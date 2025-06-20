@@ -51,7 +51,7 @@ export default function RequestConfirmationPage() {
           <Link href="/map" className="w-full">
             <Button className="w-full" variant="outline">
               <MapPin className="mr-2 h-4 w-4" />
-              View on Relief Map
+              View on Nav Jeevan Map
             </Button>
           </Link>
           <Link href="/" className="w-full">
