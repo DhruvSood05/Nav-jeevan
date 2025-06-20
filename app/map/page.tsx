@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { AlertTriangle, Filter, Layers, List, MapPin, Search } from "lucide-react"
+import { AlertTriangle, Filter, List, MapPin, Search, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -67,7 +67,7 @@ const initialHelpRequests = [
 
 export default function MapPage() {
   const { toast } = useToast()
-  const [showSidebar, setShowSidebar] = useState(true)
+  const [showSidebar, setShowSidebar] = useState(false)
   const [selectedRequest, setSelectedRequest] = useState<string | null>(null)
   const [helpRequests, setHelpRequests] = useState(initialHelpRequests)
   const [lastUpdate, setLastUpdate] = useState(new Date())
@@ -77,7 +77,6 @@ export default function MapPage() {
     const interval = setInterval(() => {
       setHelpRequests((prev) => {
         const updated = prev.map((request) => {
-          // Randomly update timestamps
           if (Math.random() < 0.3) {
             const minutes = Math.floor(Math.random() * 60) + 1
             return {
@@ -88,7 +87,6 @@ export default function MapPage() {
           return request
         })
 
-        // Occasionally add new requests
         if (Math.random() < 0.1 && updated.length < 8) {
           const newRequest = {
             id: `RC-2025-${String(Date.now()).slice(-4)}`,
@@ -114,7 +112,7 @@ export default function MapPage() {
         return updated
       })
       setLastUpdate(new Date())
-    }, 5000) // Update every 5 seconds
+    }, 5000)
 
     return () => clearInterval(interval)
   }, [toast])
@@ -125,6 +123,7 @@ export default function MapPage() {
     )
     if (matchingRequest) {
       setSelectedRequest(matchingRequest.id)
+      setShowSidebar(true)
     }
   }
 
@@ -132,151 +131,217 @@ export default function MapPage() {
   const respondingRequests = helpRequests.filter((req) => req.status === "responding")
 
   return (
-    <div className="flex h-[calc(100vh-4rem)]">
-      {/* Sidebar */}
-      <div className={`${showSidebar ? "w-80" : "w-0"} transition-all duration-300 overflow-hidden border-r bg-white`}>
-        <div className="p-4 h-full flex flex-col">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h2 className="text-lg font-semibold">Live Relief Map</h2>
-              <p className="text-xs text-gray-500">Last update: {lastUpdate.toLocaleTimeString()}</p>
-            </div>
-            <Button variant="ghost" size="sm" onClick={() => setShowSidebar(false)}>
-              <List className="h-4 w-4" />
-            </Button>
+    <div className="flex h-[calc(100vh-4rem)] relative">
+      {/* Mobile Sidebar Overlay */}
+      {showSidebar && (
+        <div className="fixed inset-0 z-40 lg:hidden">
+          <div className="fixed inset-0 bg-black/50" onClick={() => setShowSidebar(false)} />
+          <div className="fixed top-0 left-0 h-full w-80 bg-white shadow-xl">
+            <SidebarContent
+              showSidebar={showSidebar}
+              setShowSidebar={setShowSidebar}
+              lastUpdate={lastUpdate}
+              activeRequests={activeRequests}
+              respondingRequests={respondingRequests}
+              selectedRequest={selectedRequest}
+              setSelectedRequest={setSelectedRequest}
+              isMobile={true}
+            />
           </div>
-
-          <Tabs defaultValue="requests" className="flex-1 flex flex-col">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="requests">
-                Active
-                <span className="ml-1 text-xs bg-red-100 text-red-800 px-1.5 rounded-full">
-                  {activeRequests.length}
-                </span>
-              </TabsTrigger>
-              <TabsTrigger value="responding">
-                Responding
-                <span className="ml-1 text-xs bg-blue-100 text-blue-800 px-1.5 rounded-full">
-                  {respondingRequests.length}
-                </span>
-              </TabsTrigger>
-            </TabsList>
-
-            <div className="py-4 space-y-4">
-              <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-400" />
-                <Input className="pl-8" placeholder="Search location..." />
-              </div>
-
-              <div className="flex items-center gap-2">
-                <Select defaultValue="all">
-                  <SelectTrigger className="flex-1">
-                    <SelectValue placeholder="Filter by type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Types</SelectItem>
-                    <SelectItem value="medical">Medical</SelectItem>
-                    <SelectItem value="food">Food & Water</SelectItem>
-                    <SelectItem value="shelter">Shelter</SelectItem>
-                    <SelectItem value="evacuation">Evacuation</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Button variant="outline" size="icon">
-                  <Filter className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-
-            <TabsContent value="requests" className="flex-1 overflow-auto space-y-2">
-              {activeRequests.map((request) => (
-                <Card
-                  key={request.id}
-                  className={`cursor-pointer transition-colors ${
-                    selectedRequest === request.id ? "bg-red-50 border-red-200" : "hover:bg-gray-50"
-                  }`}
-                  onClick={() => setSelectedRequest(request.id)}
-                >
-                  <CardContent className="p-3">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <div className="font-medium text-sm">{request.type}</div>
-                        <div className="text-xs text-gray-500">{request.time}</div>
-                      </div>
-                      <UrgencyBadge urgency={request.urgency} />
-                    </div>
-                    <div className="mt-2 flex items-center text-xs text-gray-500">
-                      <MapPin className="h-3 w-3 mr-1" />
-                      {request.lat.toFixed(4)}, {request.lng.toFixed(4)}
-                    </div>
-                    <div className="mt-1 text-xs text-gray-600">
-                      {request.people} {request.people === 1 ? "person" : "people"} affected
-                    </div>
-                    <div className="mt-1 text-xs text-gray-700">{request.description}</div>
-                  </CardContent>
-                </Card>
-              ))}
-            </TabsContent>
-
-            <TabsContent value="responding" className="flex-1 overflow-auto space-y-2">
-              {respondingRequests.map((request) => (
-                <Card
-                  key={request.id}
-                  className={`cursor-pointer transition-colors border-blue-200 bg-blue-50 ${
-                    selectedRequest === request.id ? "bg-blue-100" : "hover:bg-blue-100"
-                  }`}
-                  onClick={() => setSelectedRequest(request.id)}
-                >
-                  <CardContent className="p-3">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <div className="font-medium text-sm">{request.type}</div>
-                        <div className="text-xs text-blue-600">Help en route</div>
-                      </div>
-                      <span className="text-xs px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-800">RESPONDING</span>
-                    </div>
-                    <div className="mt-2 text-xs text-blue-700">Assigned: {request.assignedVolunteer}</div>
-                    <div className="mt-1 text-xs text-gray-600">
-                      {request.people} {request.people === 1 ? "person" : "people"} • {request.time}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </TabsContent>
-          </Tabs>
         </div>
+      )}
+
+      {/* Desktop Sidebar */}
+      <div
+        className={`hidden lg:block ${showSidebar ? "w-80" : "w-0"} transition-all duration-300 overflow-hidden border-r bg-white`}
+      >
+        <SidebarContent
+          showSidebar={showSidebar}
+          setShowSidebar={setShowSidebar}
+          lastUpdate={lastUpdate}
+          activeRequests={activeRequests}
+          respondingRequests={respondingRequests}
+          selectedRequest={selectedRequest}
+          setSelectedRequest={setSelectedRequest}
+        />
       </div>
 
       {/* Map */}
       <div className="flex-1 relative">
-        {!showSidebar && (
-          <Button
-            variant="outline"
-            size="sm"
-            className="absolute top-4 left-4 z-10 bg-white"
-            onClick={() => setShowSidebar(true)}
-          >
+        {/* Mobile Controls */}
+        <div className="absolute top-4 left-4 right-4 z-10 flex justify-between items-center lg:hidden">
+          <Button variant="outline" size="sm" className="bg-white shadow-lg" onClick={() => setShowSidebar(true)}>
             <List className="h-4 w-4 mr-2" />
-            Show List
+            Emergency List
           </Button>
-        )}
 
-        <div className="absolute top-4 right-4 z-10 flex gap-2">
-          <Button variant="outline" size="sm" className="bg-white">
-            <Layers className="h-4 w-4 mr-2" />
-            Layers
-          </Button>
           <Link href="/request-help">
-            <Button size="sm" className="bg-red-600 hover:bg-red-700 text-white">
+            <Button size="sm" className="bg-red-600 hover:bg-red-700 text-white shadow-lg">
               <AlertTriangle className="h-4 w-4 mr-2" />
               Request Help
             </Button>
           </Link>
         </div>
 
-        {/* Real Map Integration */}
+        {/* Desktop Controls */}
+        <div className="hidden lg:block">
+          {!showSidebar && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="absolute top-4 left-4 z-10 bg-white"
+              onClick={() => setShowSidebar(true)}
+            >
+              <List className="h-4 w-4 mr-2" />
+              Show List
+            </Button>
+          )}
+
+          <div className="absolute top-4 right-4 z-10 flex gap-2">
+            <Link href="/request-help">
+              <Button size="sm" className="bg-red-600 hover:bg-red-700 text-white">
+                <AlertTriangle className="h-4 w-4 mr-2" />
+                Request Help
+              </Button>
+            </Link>
+          </div>
+        </div>
+
+        {/* Map Component */}
         <TrafficMap onMarkerClick={handleMarkerClick} />
       </div>
+    </div>
+  )
+}
+
+// Sidebar Content Component
+function SidebarContent({
+  showSidebar,
+  setShowSidebar,
+  lastUpdate,
+  activeRequests,
+  respondingRequests,
+  selectedRequest,
+  setSelectedRequest,
+  isMobile = false,
+}: {
+  showSidebar: boolean
+  setShowSidebar: (show: boolean) => void
+  lastUpdate: Date
+  activeRequests: any[]
+  respondingRequests: any[]
+  selectedRequest: string | null
+  setSelectedRequest: (id: string) => void
+  isMobile?: boolean
+}) {
+  return (
+    <div className="p-4 h-full flex flex-col">
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          <h2 className="text-lg font-semibold">Live Relief Map</h2>
+          <p className="text-xs text-gray-500">Last update: {lastUpdate.toLocaleTimeString()}</p>
+        </div>
+        <Button variant="ghost" size="sm" onClick={() => setShowSidebar(false)}>
+          <X className="h-4 w-4" />
+        </Button>
+      </div>
+
+      <Tabs defaultValue="requests" className="flex-1 flex flex-col">
+        <TabsList className="grid w-full grid-cols-2 mb-4">
+          <TabsTrigger value="requests" className="text-sm">
+            Active
+            <span className="ml-1 text-xs bg-red-100 text-red-800 px-1.5 rounded-full">{activeRequests.length}</span>
+          </TabsTrigger>
+          <TabsTrigger value="responding" className="text-sm">
+            Responding
+            <span className="ml-1 text-xs bg-blue-100 text-blue-800 px-1.5 rounded-full">
+              {respondingRequests.length}
+            </span>
+          </TabsTrigger>
+        </TabsList>
+
+        <div className="space-y-3 mb-4">
+          <div className="relative">
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-400" />
+            <Input className="pl-8 h-9" placeholder="Search location..." />
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Select defaultValue="all">
+              <SelectTrigger className="flex-1 h-9">
+                <SelectValue placeholder="Filter by type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Types</SelectItem>
+                <SelectItem value="medical">Medical</SelectItem>
+                <SelectItem value="food">Food & Water</SelectItem>
+                <SelectItem value="shelter">Shelter</SelectItem>
+                <SelectItem value="evacuation">Evacuation</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Button variant="outline" size="sm">
+              <Filter className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+
+        <TabsContent value="requests" className="flex-1 overflow-auto space-y-2">
+          {activeRequests.map((request) => (
+            <Card
+              key={request.id}
+              className={`cursor-pointer transition-colors ${
+                selectedRequest === request.id ? "bg-red-50 border-red-200" : "hover:bg-gray-50"
+              }`}
+              onClick={() => setSelectedRequest(request.id)}
+            >
+              <CardContent className="p-3">
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <div className="font-medium text-sm">{request.type}</div>
+                    <div className="text-xs text-gray-500">{request.time}</div>
+                  </div>
+                  <UrgencyBadge urgency={request.urgency} />
+                </div>
+                <div className="flex items-center text-xs text-gray-500 mb-1">
+                  <MapPin className="h-3 w-3 mr-1" />
+                  {request.lat.toFixed(4)}, {request.lng.toFixed(4)}
+                </div>
+                <div className="text-xs text-gray-600 mb-1">
+                  {request.people} {request.people === 1 ? "person" : "people"} affected
+                </div>
+                <div className="text-xs text-gray-700">{request.description}</div>
+              </CardContent>
+            </Card>
+          ))}
+        </TabsContent>
+
+        <TabsContent value="responding" className="flex-1 overflow-auto space-y-2">
+          {respondingRequests.map((request) => (
+            <Card
+              key={request.id}
+              className={`cursor-pointer transition-colors border-blue-200 bg-blue-50 ${
+                selectedRequest === request.id ? "bg-blue-100" : "hover:bg-blue-100"
+              }`}
+              onClick={() => setSelectedRequest(request.id)}
+            >
+              <CardContent className="p-3">
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <div className="font-medium text-sm">{request.type}</div>
+                    <div className="text-xs text-blue-600">Help en route</div>
+                  </div>
+                  <span className="text-xs px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-800">RESPONDING</span>
+                </div>
+                <div className="text-xs text-blue-700 mb-1">Assigned: {request.assignedVolunteer}</div>
+                <div className="text-xs text-gray-600">
+                  {request.people} {request.people === 1 ? "person" : "people"} • {request.time}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { AlertTriangle, Heart, MapPin, Users, Zap, Shield, Globe, ArrowRight, Star } from "lucide-react"
+import { AlertTriangle, Heart, MapPin, Users, Zap, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { motion } from "framer-motion"
@@ -52,47 +52,43 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 md:py-32">
-        <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 via-orange-500/10 to-yellow-500/10 dark:from-red-500/5 dark:via-orange-500/5 dark:to-yellow-500/5" />
+      <section className="relative overflow-hidden py-8 md:py-16 lg:py-24">
+        <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 via-orange-500/10 to-yellow-500/10" />
         <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fillRule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23000000&quot; fillOpacity=&quot;0.02&quot;%3E%3Ccircle cx=&quot;30&quot; cy=&quot;30&quot; r=&quot;2&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-40" />
 
-        <div className="container relative px-4 md:px-6 mx-auto">
+        <div className="container relative px-4 mx-auto">
           <motion.div
-            className="flex flex-col items-center space-y-8 text-center max-w-6xl mx-auto"
+            className="flex flex-col items-center space-y-6 text-center max-w-4xl mx-auto"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
           >
             <motion.div className="space-y-4" variants={itemVariants}>
-              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl bg-gradient-to-r from-gray-900 via-red-600 to-orange-600 bg-clip-text text-transparent dark:from-white dark:via-red-400 dark:to-orange-400">
+              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-gray-900 via-red-600 to-orange-600 bg-clip-text text-transparent">
                 ReliefConnect
               </h1>
-              <p className="mx-auto max-w-3xl text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p className="mx-auto max-w-2xl text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed px-4">
                 Revolutionary disaster relief platform that connects victims, volunteers, and organizations with{" "}
-                <span className="font-semibold text-red-600 dark:text-red-400">real-time coordination</span> and
-                <span className="font-semibold text-orange-600 dark:text-orange-400">
-                  {" "}
-                  instant response capabilities
-                </span>
+                <span className="font-semibold text-red-600">real-time coordination</span> and
+                <span className="font-semibold text-orange-600"> instant response capabilities</span>
               </p>
             </motion.div>
 
-            <motion.div className="flex flex-col sm:flex-row gap-4" variants={itemVariants}>
-              <Link href="/request-help">
+            <motion.div className="flex flex-col sm:flex-row gap-4 w-full max-w-md" variants={itemVariants}>
+              <Link href="/request-help" className="flex-1">
                 <Button
                   size="lg"
-                  className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                  className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   <AlertTriangle className="mr-2 h-5 w-5" />
                   Emergency Help
-                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
-              <Link href="/volunteer">
+              <Link href="/volunteer" className="flex-1">
                 <Button
                   variant="outline"
                   size="lg"
-                  className="bg-white/50 backdrop-blur-sm border-2 hover:bg-white/80 transition-all duration-300 transform hover:scale-105"
+                  className="w-full bg-white/50 backdrop-blur-sm border-2 hover:bg-white/80 transition-all duration-300"
                 >
                   <Heart className="mr-2 h-5 w-5" />
                   Join as Volunteer
@@ -102,7 +98,7 @@ export default function Home() {
 
             {/* Live Stats */}
             <motion.div
-              className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 w-full max-w-4xl"
+              className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 w-full max-w-4xl px-4"
               variants={itemVariants}
             >
               {[
@@ -113,11 +109,11 @@ export default function Home() {
               ].map((stat, index) => (
                 <div
                   key={index}
-                  className="text-center p-4 rounded-xl bg-white/30 backdrop-blur-sm border border-white/20"
+                  className="text-center p-3 md:p-4 rounded-xl bg-white/30 backdrop-blur-sm border border-white/20"
                 >
-                  <stat.icon className={`h-6 w-6 mx-auto mb-2 ${stat.color}`} />
-                  <div className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value.toLocaleString()}</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-300">{stat.label}</div>
+                  <stat.icon className={`h-5 w-5 md:h-6 md:w-6 mx-auto mb-2 ${stat.color}`} />
+                  <div className="text-lg md:text-2xl font-bold text-gray-900">{stat.value.toLocaleString()}</div>
+                  <div className="text-xs md:text-sm text-gray-600">{stat.label}</div>
                 </div>
               ))}
             </motion.div>
@@ -126,22 +122,22 @@ export default function Home() {
       </section>
 
       {/* Main Features */}
-      <section className="py-20 bg-white/50 backdrop-blur-sm dark:bg-gray-900/50">
-        <div className="container px-4 md:px-6 mx-auto">
+      <section className="py-12 md:py-20 bg-white/50 backdrop-blur-sm">
+        <div className="container px-4 mx-auto">
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl mb-4">How ReliefConnect Works</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-4">How ReliefConnect Works</h2>
+            <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-4">
               Our platform streamlines disaster response with intelligent matching and real-time coordination
             </p>
           </motion.div>
 
-          <div className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
             {[
               {
                 icon: AlertTriangle,
@@ -176,22 +172,22 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Card className="h-full group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 bg-white/80 backdrop-blur-sm border-0 shadow-lg dark:bg-gray-800/80">
+                <Card className="h-full group hover:shadow-2xl transition-all duration-300 bg-white/80 backdrop-blur-sm border-0 shadow-lg">
                   <CardHeader className="text-center pb-4">
                     <div
-                      className={`w-16 h-16 mx-auto rounded-full bg-gradient-to-r ${feature.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}
+                      className={`w-12 h-12 md:w-16 md:h-16 mx-auto rounded-full bg-gradient-to-r ${feature.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}
                     >
-                      <feature.icon className="h-8 w-8 text-white" />
+                      <feature.icon className="h-6 w-6 md:h-8 md:w-8 text-white" />
                     </div>
-                    <CardTitle className="text-xl font-semibold">{feature.title}</CardTitle>
-                    <CardDescription className="text-gray-600 dark:text-gray-300">
+                    <CardTitle className="text-lg md:text-xl font-semibold">{feature.title}</CardTitle>
+                    <CardDescription className="text-sm md:text-base text-gray-600 px-2">
                       {feature.description}
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="pt-0">
                     <ul className="space-y-2">
                       {feature.features.map((item, i) => (
-                        <li key={i} className="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                        <li key={i} className="flex items-center text-sm text-gray-600">
                           <div className="w-2 h-2 bg-gradient-to-r from-green-400 to-green-500 rounded-full mr-3" />
                           {item}
                         </li>
@@ -213,79 +209,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Advanced Features */}
-      <section className="py-20">
-        <div className="container px-4 md:px-6 mx-auto">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl mb-4">Advanced Capabilities</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Powered by cutting-edge technology for maximum efficiency and impact
-            </p>
-          </motion.div>
-
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
-            {[
-              {
-                icon: Zap,
-                title: "Intelligent Coordination",
-                description: "Machine learning algorithms optimize resource allocation and response times",
-              },
-              {
-                icon: Shield,
-                title: "Verified Network",
-                description: "All volunteers and organizations are verified for safety and reliability",
-              },
-              {
-                icon: Globe,
-                title: "Global Reach",
-                description: "Multi-language support and international coordination capabilities",
-              },
-              {
-                icon: Users,
-                title: "Community Building",
-                description: "Build lasting connections between communities and support networks",
-              },
-              {
-                icon: MapPin,
-                title: "Precision Mapping",
-                description: "Satellite imagery and GPS integration for accurate location services",
-              },
-              {
-                icon: Star,
-                title: "Impact Tracking",
-                description: "Comprehensive analytics and reporting on relief efforts and outcomes",
-              },
-            ].map((feature, index) => (
-              <motion.div
-                key={index}
-                className="flex items-start space-x-4 p-6 rounded-xl bg-white/30 backdrop-blur-sm border border-white/20 hover:bg-white/50 transition-all duration-300 dark:bg-gray-800/30 dark:border-gray-700/20 dark:hover:bg-gray-800/50"
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <div className="flex-shrink-0">
-                  <feature.icon className="h-6 w-6 text-blue-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{feature.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">{feature.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600">
-        <div className="container px-4 md:px-6 mx-auto">
+      <section className="py-12 md:py-20 bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600">
+        <div className="container px-4 mx-auto">
           <motion.div
             className="text-center text-white max-w-4xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
@@ -293,26 +219,28 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl mb-4">Ready to Make a Difference?</h2>
-            <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-4">
+              Ready to Make a Difference?
+            </h2>
+            <p className="text-lg md:text-xl mb-8 opacity-90 max-w-2xl mx-auto px-4">
               Join thousands of volunteers and organizations making real impact in disaster relief efforts worldwide
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/request-help">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+              <Link href="/request-help" className="flex-1">
                 <Button
                   size="lg"
                   variant="secondary"
-                  className="bg-white text-red-600 hover:bg-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                  className="w-full bg-white text-red-600 hover:bg-gray-100 shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   <AlertTriangle className="mr-2 h-5 w-5" />
                   Need Help Now
                 </Button>
               </Link>
-              <Link href="/volunteer">
+              <Link href="/volunteer" className="flex-1">
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-red-600 transition-all duration-300 transform hover:scale-105"
+                  className="w-full border-white text-white hover:bg-white hover:text-red-600 transition-all duration-300"
                 >
                   <Heart className="mr-2 h-5 w-5" />
                   Start Volunteering
@@ -324,9 +252,9 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container px-4 md:px-6 mx-auto">
-          <div className="grid gap-8 md:grid-cols-4 max-w-6xl mx-auto">
+      <footer className="bg-gray-900 text-white py-8 md:py-12">
+        <div className="container px-4 mx-auto">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
             <div className="space-y-4">
               <h3 className="text-lg font-semibold">ReliefConnect</h3>
               <p className="text-gray-400 text-sm">
@@ -376,11 +304,6 @@ export default function Home() {
                     Help Center
                   </Link>
                 </li>
-                <li>
-                  <Link href="/api" className="hover:text-white transition-colors">
-                    API
-                  </Link>
-                </li>
               </ul>
             </div>
             <div className="space-y-4">
@@ -394,11 +317,6 @@ export default function Home() {
                 <li>
                   <Link href="/terms" className="hover:text-white transition-colors">
                     Terms of Service
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/security" className="hover:text-white transition-colors">
-                    Security
                   </Link>
                 </li>
               </ul>
