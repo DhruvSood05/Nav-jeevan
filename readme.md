@@ -27,8 +27,8 @@
 ```bash
 git clone https://github.com/your-username/nav-jeevan.git
 cd nav-jeevan
-pnpm install
-pnpm dev
+npm i
+npm run dev
 ```
 
 ## Contributing
