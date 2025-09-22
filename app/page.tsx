@@ -1,11 +1,25 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { AlertTriangle, Heart, MapPin, Users, Zap, ArrowRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { motion } from "framer-motion"
-import { useState, useEffect } from "react"
+import Link from "next/link";
+import {
+  AlertTriangle,
+  Heart,
+  MapPin,
+  Users,
+  Zap,
+  ArrowRight,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const [stats, setStats] = useState({
@@ -13,7 +27,7 @@ export default function Home() {
     volunteers: 0,
     peopleHelped: 0,
     responseTime: 0,
-  })
+  });
 
   useEffect(() => {
     // Animate stats on load
@@ -23,10 +37,10 @@ export default function Home() {
         volunteers: 3892,
         peopleHelped: 15634,
         responseTime: 8,
-      })
-    }, 500)
-    return () => clearTimeout(timer)
-  }, [])
+      });
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -36,7 +50,7 @@ export default function Home() {
         staggerChildren: 0.1,
       },
     },
-  }
+  };
 
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
@@ -47,14 +61,14 @@ export default function Home() {
         duration: 0.5,
       },
     },
-  }
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <section className="relative overflow-hidden py-8 md:py-16 lg:py-24">
         <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 via-orange-500/10 to-yellow-500/10" />
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fillRule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23000000&quot; fillOpacity=&quot;0.02&quot;%3E%3Ccircle cx=&quot;30&quot; cy=&quot;30&quot; r=&quot;2&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-40" />
+        <div className='absolute inset-0 bg-[url(&apos;data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fillRule="evenodd"%3E%3Cg fill="%23000000" fillOpacity="0.02"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E&apos;)] opacity-40' />
 
         <div className="container relative px-4 mx-auto">
           <motion.div
@@ -68,13 +82,23 @@ export default function Home() {
                 Nav Jeevan
               </h1>
               <p className="mx-auto max-w-2xl text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed px-4">
-                Revolutionary disaster relief platform that connects victims, volunteers, and organizations with{" "}
-                <span className="font-semibold text-red-600">real-time coordination</span> and
-                <span className="font-semibold text-orange-600"> instant response capabilities</span>
+                Revolutionary disaster relief platform that connects victims,
+                volunteers, and organizations with{" "}
+                <span className="font-semibold text-red-600">
+                  real-time coordination
+                </span>{" "}
+                and
+                <span className="font-semibold text-orange-600">
+                  {" "}
+                  instant response capabilities
+                </span>
               </p>
             </motion.div>
 
-            <motion.div className="flex flex-col sm:flex-row gap-4 w-full max-w-md" variants={itemVariants}>
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 w-full max-w-md"
+              variants={itemVariants}
+            >
               <Link href="/request-help" className="flex-1">
                 <Button
                   size="lg"
@@ -102,18 +126,44 @@ export default function Home() {
               variants={itemVariants}
             >
               {[
-                { label: "Active Requests", value: stats.helpRequests, icon: AlertTriangle, color: "text-red-600" },
-                { label: "Active Volunteers", value: stats.volunteers, icon: Users, color: "text-blue-600" },
-                { label: "People Helped", value: stats.peopleHelped, icon: Heart, color: "text-green-600" },
-                { label: "Avg Response (min)", value: stats.responseTime, icon: Zap, color: "text-orange-600" },
+                {
+                  label: "Active Requests",
+                  value: stats.helpRequests,
+                  icon: AlertTriangle,
+                  color: "text-red-600",
+                },
+                {
+                  label: "Active Volunteers",
+                  value: stats.volunteers,
+                  icon: Users,
+                  color: "text-blue-600",
+                },
+                {
+                  label: "People Helped",
+                  value: stats.peopleHelped,
+                  icon: Heart,
+                  color: "text-green-600",
+                },
+                {
+                  label: "Avg Response (min)",
+                  value: stats.responseTime,
+                  icon: Zap,
+                  color: "text-orange-600",
+                },
               ].map((stat, index) => (
                 <div
                   key={index}
                   className="text-center p-3 md:p-4 rounded-xl bg-white/30 backdrop-blur-sm border border-white/20"
                 >
-                  <stat.icon className={`h-5 w-5 md:h-6 md:w-6 mx-auto mb-2 ${stat.color}`} />
-                  <div className="text-lg md:text-2xl font-bold text-gray-900">{stat.value.toLocaleString()}</div>
-                  <div className="text-xs md:text-sm text-gray-600">{stat.label}</div>
+                  <stat.icon
+                    className={`h-5 w-5 md:h-6 md:w-6 mx-auto mb-2 ${stat.color}`}
+                  />
+                  <div className="text-lg md:text-2xl font-bold text-gray-900">
+                    {stat.value.toLocaleString()}
+                  </div>
+                  <div className="text-xs md:text-sm text-gray-600">
+                    {stat.label}
+                  </div>
                 </div>
               ))}
             </motion.div>
@@ -131,9 +181,12 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-4">How Nav Jeevan Works</h2>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-4">
+              How Nav Jeevan Works
+            </h2>
             <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-4">
-              Our platform streamlines disaster response with intelligent matching and real-time coordination
+              Our platform streamlines disaster response with intelligent
+              matching and real-time coordination
             </p>
           </motion.div>
 
@@ -142,10 +195,15 @@ export default function Home() {
               {
                 icon: AlertTriangle,
                 title: "Emergency Request",
-                description: "Submit help requests with priority assessment and automatic location detection",
+                description:
+                  "Submit help requests with priority assessment and automatic location detection",
                 color: "from-red-500 to-red-600",
                 href: "/request-help",
-                features: ["Priority Assessment", "GPS Auto-Location", "Multi-language Support"],
+                features: [
+                  "Priority Assessment",
+                  "GPS Auto-Location",
+                  "Multi-language Support",
+                ],
               },
               {
                 icon: Heart,
@@ -154,15 +212,24 @@ export default function Home() {
                   "Matches volunteers with requests based on skills, location, and availability in real-time",
                 color: "from-green-500 to-green-600",
                 href: "/volunteer",
-                features: ["Skill-based Matching", "Real-time Notifications", "Progress Tracking"],
+                features: [
+                  "Skill-based Matching",
+                  "Real-time Notifications",
+                  "Progress Tracking",
+                ],
               },
               {
                 icon: MapPin,
                 title: "Live Relief Map",
-                description: "Interactive map with real-time updates, resource tracking, and coordination tools",
+                description:
+                  "Interactive map with real-time updates, resource tracking, and coordination tools",
                 color: "from-blue-500 to-blue-600",
                 href: "/map",
-                features: ["Real-time Updates", "Resource Tracking", "Route Optimization"],
+                features: [
+                  "Real-time Updates",
+                  "Resource Tracking",
+                  "Route Optimization",
+                ],
               },
             ].map((feature, index) => (
               <motion.div
@@ -179,7 +246,9 @@ export default function Home() {
                     >
                       <feature.icon className="h-6 w-6 md:h-8 md:w-8 text-white" />
                     </div>
-                    <CardTitle className="text-lg md:text-xl font-semibold">{feature.title}</CardTitle>
+                    <CardTitle className="text-lg md:text-xl font-semibold">
+                      {feature.title}
+                    </CardTitle>
                     <CardDescription className="text-sm md:text-base text-gray-600 px-2">
                       {feature.description}
                     </CardDescription>
@@ -187,7 +256,10 @@ export default function Home() {
                   <CardContent className="pt-0">
                     <ul className="space-y-2">
                       {feature.features.map((item, i) => (
-                        <li key={i} className="flex items-center text-sm text-gray-600">
+                        <li
+                          key={i}
+                          className="flex items-center text-sm text-gray-600"
+                        >
                           <div className="w-2 h-2 bg-gradient-to-r from-green-400 to-green-500 rounded-full mr-3" />
                           {item}
                         </li>
@@ -223,7 +295,8 @@ export default function Home() {
               Ready to Make a Difference?
             </h2>
             <p className="text-lg md:text-xl mb-8 opacity-90 max-w-2xl mx-auto px-4">
-              Join thousands of volunteers and organizations making real impact in disaster relief efforts worldwide
+              Join thousands of volunteers and organizations making real impact
+              in disaster relief efforts worldwide
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
               <Link href="/request-help" className="flex-1">
@@ -239,8 +312,7 @@ export default function Home() {
               <Link href="/volunteer" className="flex-1">
                 <Button
                   size="lg"
-                  variant="outline"
-                  className="w-full border-white text-white hover:bg-white hover:text-red-600 transition-all duration-300"
+                  className="w-full bg-white text-red-600 border-white hover:bg-gray-200 hover:text-red-600 transition-all duration-300"
                 >
                   <Heart className="mr-2 h-5 w-5" />
                   Start Volunteering
@@ -258,29 +330,42 @@ export default function Home() {
             <div className="space-y-4">
               <h3 className="text-lg font-semibold">Nav Jeevan</h3>
               <p className="text-gray-400 text-sm">
-                Disaster relief coordination platform connecting communities worldwide.
+                Disaster relief coordination platform connecting communities
+                worldwide.
               </p>
             </div>
             <div className="space-y-4">
               <h4 className="font-semibold">Platform</h4>
               <ul className="space-y-2 text-sm text-gray-400">
                 <li>
-                  <Link href="/request-help" className="hover:text-white transition-colors">
+                  <Link
+                    href="/request-help"
+                    className="hover:text-white transition-colors"
+                  >
                     Request Help
                   </Link>
                 </li>
                 <li>
-                  <Link href="/volunteer" className="hover:text-white transition-colors">
+                  <Link
+                    href="/volunteer"
+                    className="hover:text-white transition-colors"
+                  >
                     Volunteer
                   </Link>
                 </li>
                 <li>
-                  <Link href="/map" className="hover:text-white transition-colors">
+                  <Link
+                    href="/map"
+                    className="hover:text-white transition-colors"
+                  >
                     Nav Jeevan Map
                   </Link>
                 </li>
                 <li>
-                  <Link href="/donate" className="hover:text-white transition-colors">
+                  <Link
+                    href="/donate"
+                    className="hover:text-white transition-colors"
+                  >
                     Donate
                   </Link>
                 </li>
@@ -290,17 +375,26 @@ export default function Home() {
               <h4 className="font-semibold">Support</h4>
               <ul className="space-y-2 text-sm text-gray-400">
                 <li>
-                  <Link href="/about" className="hover:text-white transition-colors">
+                  <Link
+                    href="/about"
+                    className="hover:text-white transition-colors"
+                  >
                     About
                   </Link>
                 </li>
                 <li>
-                  <Link href="/contact" className="hover:text-white transition-colors">
+                  <Link
+                    href="/contact"
+                    className="hover:text-white transition-colors"
+                  >
                     Contact
                   </Link>
                 </li>
                 <li>
-                  <Link href="/help" className="hover:text-white transition-colors">
+                  <Link
+                    href="/help"
+                    className="hover:text-white transition-colors"
+                  >
                     Help Center
                   </Link>
                 </li>
@@ -310,12 +404,18 @@ export default function Home() {
               <h4 className="font-semibold">Legal</h4>
               <ul className="space-y-2 text-sm text-gray-400">
                 <li>
-                  <Link href="/privacy" className="hover:text-white transition-colors">
+                  <Link
+                    href="/privacy"
+                    className="hover:text-white transition-colors"
+                  >
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link href="/terms" className="hover:text-white transition-colors">
+                  <Link
+                    href="/terms"
+                    className="hover:text-white transition-colors"
+                  >
                     Terms of Service
                   </Link>
                 </li>
@@ -328,5 +428,5 @@ export default function Home() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
